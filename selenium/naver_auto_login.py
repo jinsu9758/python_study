@@ -23,15 +23,15 @@
 # #3. ID, PW 입력하기
 # Id = browser.find_element_by_id("id")
 # Id.click()
-# pyperclip.copy("jinsu9758")
+# pyperclip.copy("아이디 입력")
 # Id.send_keys(Keys.CONTROL,'v')
 # time.sleep(1)
-# #Id = browser.find_element_by_id("id").send_keys("jinsu9758") 가능
+# #Id = browser.find_element_by_id("id").send_keys("아이디 입력") 가능
 
 
 # Pw = browser.find_element_by_id("pw")
 # Pw.click()
-# pyperclip.copy("wlstn123")
+# pyperclip.copy("비밀번호 입력")
 # Pw.send_keys(Keys.CONTROL,'v')
 # time.sleep(1)
 
@@ -66,8 +66,8 @@ browser.get(url)
 #        document.getElementById("pw").value = "{pw}"; \
 #    '.format(id = "jinsu9758", pw = "wlstn123")
 
-input_id = "document.getElementById('id').value = '{}'".format("jinsu9758")
-input_pw = "document.getElementById('pw').value = '{}'".format("wlstn123")
+input_id = "document.getElementById('id').value = '{}'".format("아이디 입력")
+input_pw = "document.getElementById('pw').value = '{}'".format("패스워드 입력")
 
 
 time.sleep(random.uniform(1,3)) # 자동화탐지를 우회 하기 위한 delay
