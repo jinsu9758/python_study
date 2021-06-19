@@ -15,7 +15,7 @@ key = {"keyword1":"나 찐따아니다", "keyword2":"나 찐따맞다", "keyword
 
 def create_browser(url):
     try:        #브라우저 여는 과정
-        browser = webdriver.Chrome(r"C:\Users\CKIRUser\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Python 3.7\jin\chromedriver.exe")
+        browser = webdriver.Chrome(r"C:\Users\Admin\Desktop\jin\chromedriver.exe")
         browser.get(url)
         return browser
 
@@ -31,6 +31,7 @@ def login(browser, ID, PW):
         browser.execute_script(pw_input)
         time.sleep(random.uniform(1,3))
         browser.find_element_by_id("log.login").click()
+        return browser
 
     except:
         return -1
@@ -40,11 +41,12 @@ class CLASS:    #반별로 클래스 만들꺼
     def __init__(self, elem):
         self.elem = elem
         #print("클래스 생성 완료")
-    def Send_Key(self, browser, key):     #이메일 보내는 기능넣을꺼 + 주간 or 야간 추가
-        #self.elem = browser.find_element_by_id("query")
+    def Send_Key(self, browser, key):     #이메일 보내는 기능넣을꺼
+        self.elem = browser.find_element_by_id("query")
         self.elem = WebDriverWait(browser, 10).until(EC.presence_of_element_located((By.ID,"query")))
         self.elem.send_keys(key)
         self.elem.send_keys(Keys.ENTER)
+        
 
 
 
@@ -56,7 +58,8 @@ cl = int(input('몇반이십니까??? : '))
 
 browser = create_browser(url)
 
-login(browser, ID, PW)
+browser = login(browser, ID, PW)
+
 elem=''
 if cl == 1:
     print("1반입니다")
@@ -77,6 +80,3 @@ elif cl == 4:
     print("4반입니다")
     class_4 = CLASS(elem)
     class_4.Send_Key(browser, key['keyword4'])
-    
-
-
