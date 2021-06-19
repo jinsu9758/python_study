@@ -40,7 +40,7 @@ class CLASS:    #반별로 클래스 만들꺼
     def __init__(self, elem):
         self.elem = elem
         #print("클래스 생성 완료")
-    def Send_Key(self, browser, key):     #이메일 보내는 기능넣을꺼
+    def Send_Key(self, browser, key):     #이메일 보내는 기능넣을꺼 + 주간 or 야간 추가
         #self.elem = browser.find_element_by_id("query")
         self.elem = WebDriverWait(browser, 10).until(EC.presence_of_element_located((By.ID,"query")))
         self.elem.send_keys(key)
