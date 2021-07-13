@@ -40,6 +40,10 @@ elem = browser.find_element_by_name("q")
 elem = browser.find_element_by_xpath("//*[@id='daumSearch']/fieldset/div/div/button[2]")
 elem.click() #클릭 동작
 
+#selenium -> iframe 작업방법
+#browser.switch_to.frame('IFRAME_ID') #frame 전환
+#browser.switch_to.default_content() #상위 frame 전환
+
 # 브라우저 닫기
 browser.close() # -> 현재 탭만 닫는거
 browser.quit() # -> 모든 탭 닫는거
