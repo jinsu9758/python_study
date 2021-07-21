@@ -41,19 +41,4 @@ for idx, data in enumerate(datas):
     print("{} : {}".format('home', data['phone']['home']))
     print("{} : {}".format('office', data['phone']['office']))
     print()
-
     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
