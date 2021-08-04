@@ -80,6 +80,7 @@ def Filter_Packet(path, ip_src, ip_dst):
 
     result = ip_src_dict.copy()
     result.update(ip_dst_dict)
+    #print(result)
     return result
 
 
@@ -91,6 +92,7 @@ def Filter_Packet2(path, result):
     start.print_title("필터링을 시작합니다.\n")
     cnt = 0
     order = 0 #프레임번호
+    end=0
     order_list=[]
     for packet in packets:
         order = order + 1
@@ -122,7 +124,8 @@ def Filter_Packet2(path, result):
             print("{}. ".format(order)+"출발지 : "+packet['IP'].src+"\t\t"+"출발지포트 : "+str(packet['IP'].sport)+"\t\t"+"목적지 : "+packet['IP'].dst+"\t\t"+"목적지포트 : "+str(packet['IP'].dport)) #출발지/목적지
             order_list.append(order)
             end = order+1
-    print("{}. 프로그램 종료".format(end))
+    if end != 0:
+        print("{}. 프로그램 종료".format(end))
     print()
     start.print_info("총 패킷 개수 : {}개".format(cnt))
     print()
@@ -152,15 +155,15 @@ def ShowPCK(path, final, result):
         choice = int(input('선택 : '))
 
         if choice == 1:
-            detail = Filter_Packet2(path, result)
-            ShowPCK(path, detail, result)
+            final = Filter_Packet2(path, result)
+            ShowPCK(path, final, result)
         elif choice == 2:
             start.print_title("프로그램을 종료합니다.")
             quit()
     else:
         start.print_title("알맞은 번호를 선택해주세요\n")
-        detail = Filter_Packet2(path, result)
-        ShowPCK(path, detail, result)
+        final = Filter_Packet2(path, result)
+        ShowPCK(path, final, result)
         
 
 
