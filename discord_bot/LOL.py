@@ -2,11 +2,15 @@ import asyncio
 import discord
 import requests
 from bs4 import BeautifulSoup
+import time
+import os
+from selenium import webdriver
+#from selenium.webdriver.chrome.options import Options
 
 client = discord.Client()
 
 # 생성된 토큰을 입력해준다.
-token = "보안상의 이유로 가립니다."
+token = "ODc1OTkxNDQzNDg1OTAwODEw.YRdkmw._SV_8b7-l1SoKmonrGls5eWMLUo"
 Line = {'탑':'top', '정글':'jungle', '미드':'mid', '원딜':'adc', '서폿':'support'}
 
 
@@ -35,6 +39,23 @@ def Search_champ(msg):
     #print(Line[msg[0]])
     url = "https://www.op.gg/champion/{}/statistics/{}/build".format(eng_champ, Line[msg[0]])
     return url
+
+def upload_pic(url):
+    options = webdriver.ChromeOptions()
+    options.add_argument('headless')
+    options.add_argument('--disable-gpu')
+    browser = webdriver.Chrome('chromedriver.exe', options=options)
+    browser.get(url)
+    browser.set_window_size(750,800)
+    browser.execute_script("window.scrollTo(0, 1850)")
+    secs = time.time()
+    browser.save_screenshot('./temp/' + str(secs)+'.png')
+    file = './temp/' + str(secs)+'.png'
+    browser.quit()
+    return file
+    
+def remove(file):
+    os.remove(file)
 
 
 def champ_tier(msg):
@@ -80,6 +101,7 @@ def champ_tier(msg):
                     result = "\'{}. ".format(cnt)+kor_champ+"\'\n"
                     cnt = cnt+1
                     result2 = result2 + result
+            f.close()
     return result2
         
 
@@ -145,6 +167,7 @@ def user_info(url):
                     most_champs = most_champs + "{}. ".format(cnt) + kor_champ+ '/' + kdas_list[index] + '/' + "{}({})".format(champ_win_rate_percent_list[index], champ_win_rate_game_list[index]) + "\n"
                     cnt = cnt + 1
                     index = index+1
+            f.close()
         #print(most_champs)
                         
 
@@ -254,8 +277,11 @@ async def on_message(message):
 
     if message.content.startswith('탑 ') or message.content.startswith('미드 ') or message.content.startswith('정글 ') or message.content.startswith('원딜 ') or message.content.startswith('서폿 '):
         search_champ = message.channel
-        #Search_champ(message.content)
+        url = Search_champ(message.content)
+        file = upload_pic(url)
         await search_champ.send('{} 이거 많이 해본거 맞냐??... 불안하다..★'.format(message.content)+"\n"+Search_champ(message.content))
+        await search_champ.send(file=discord.File(file))
+        remove(file)
         
     if message.content == "탑티어" or message.content == "미드티어" or message.content == "정글티어" or message.content == "원딜티어" or message.content == "서폿티어":
         msg = message.content.split("티어")
