@@ -10,7 +10,7 @@ from selenium import webdriver
 client = discord.Client()
 
 # 생성된 토큰을 입력해준다.
-token = "ODc1OTkxNDQzNDg1OTAwODEw.YRdkmw._SV_8b7-l1SoKmonrGls5eWMLUo"
+token = "보안상의 이유로 가립니다!"
 Line = {'탑':'top', '정글':'jungle', '미드':'mid', '원딜':'adc', '서폿':'support'}
 
 
