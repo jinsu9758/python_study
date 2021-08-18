@@ -1,3 +1,6 @@
+#discord_bot_V2
+#chromedriver, champ2.txt, temp폴더 필요
+
 import asyncio
 import discord
 import requests
@@ -278,6 +281,7 @@ async def on_message(message):
     if message.content.startswith('탑 ') or message.content.startswith('미드 ') or message.content.startswith('정글 ') or message.content.startswith('원딜 ') or message.content.startswith('서폿 '):
         search_champ = message.channel
         url = Search_champ(message.content)
+        await search_champ.send('3초만 기다려 달라구...올려줄게....에욱')
         file = upload_pic(url)
         await search_champ.send('{} 이거 많이 해본거 맞냐??... 불안하다..★'.format(message.content)+"\n"+Search_champ(message.content))
         await search_champ.send(file=discord.File(file))
