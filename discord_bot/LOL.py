@@ -1,4 +1,4 @@
-#discord_bot_V2
+## discord_bot_v3 ##
 #chromedriver, champ2.txt, temp폴더 필요
 
 import asyncio
@@ -13,7 +13,7 @@ from selenium import webdriver
 client = discord.Client()
 
 # 생성된 토큰을 입력해준다.
-token = "보안상의 이유로 가립니다!"
+token = "보안상의 이유로 가립니다."
 Line = {'탑':'top', '정글':'jungle', '미드':'mid', '원딜':'adc', '서폿':'support'}
 
 
@@ -195,6 +195,32 @@ def user_info(url):
     return result
 
 
+def wind_champ_tier(wind_champ):
+    try:
+        result = ""
+        with open('champ2.txt', 'r') as file_data:
+            for line in file_data:
+                line = line.replace('\n','')
+                if wind_champ in line:
+                    eng_champ = line.split(':')
+                    eng_champ = eng_champ[0]
+                    eng_champ = eng_champ[2:-1]
+        url="https://www.op.gg/aram/{}/statistics/450/build".format(eng_champ)
+        res = requests.get(url)
+        res.raise_for_status()
+        soup = BeautifulSoup(res.text, "lxml")
+        champ_tier = soup.find("div", attrs={"class" : "champion-stats-header-info__tier"}).find("b").get_text().strip()
+        champ_tier = champ_tier.split(' ')
+        champ_tier = champ_tier[1]
+        result = result + champ_tier + ' 티어'
+        return result
+    
+    except:
+        result = ""
+        result = "챔피언 똑바로 입력 안할래?!\n뭉개버린다잉?"
+        return result
+        
+
 
 # 봇이 구동되었을 때 보여지는 코드
 @client.event
@@ -220,7 +246,8 @@ async def on_message(message):
                 +"\"- op.gg / op.gg 접속\"\n"\
                 +"\"- !!소환사_이름 / 유저검색\"\n"\
                 +"\"- 라인 챔피언 / ex) 탑 가렌\"\n"\
-                +"\"- 라인티어 / ex) 미드티어\"```"
+                +"\"- 라인티어 / ex) 미드티어\"\n"\
+                +"\"- 칼바람 챔피언이름\"```"
 
 
         await help_msg.send(msg)
@@ -292,8 +319,15 @@ async def on_message(message):
         msg = msg[0]
         line_tier = message.channel
         await line_tier.send('```cs\n# '+message.content+' hot 10 champs #\n'+champ_tier(msg)+"```")
-                
 
+
+    if message.content.startswith('칼바람 '):
+        msg = message.content.split(" ")
+        wind_champ = msg[1]
+        result = wind_champ_tier(wind_champ)
+        cal_tier = message.channel
+        await cal_tier.send(result)
+        
 
 if __name__ == "__main__":
     client.run(token)
