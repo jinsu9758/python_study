@@ -194,7 +194,7 @@ def user_info(url):
                result = "랭크나 뛰고 와라...애송아....에욱"
     return result
 
-
+#칼바람 챔프티어 확인
 def wind_champ_tier(wind_champ):
     try:
         result = ""
