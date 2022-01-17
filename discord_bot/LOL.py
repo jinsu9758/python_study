@@ -13,7 +13,8 @@ from selenium import webdriver
 client = discord.Client()
 
 # 생성된 토큰을 입력해준다.
-token = "보안상의 이유로 가립니다."
+token = "보안적인 요소로 인해 가립니다."
+
 Line = {'탑':'top', '정글':'jungle', '미드':'mid', '원딜':'adc', '서폿':'support'}
 
 
@@ -63,7 +64,8 @@ def remove(file):
 
 def champ_tier(msg):
     url = "https://www.op.gg/champion/statistics"
-    res = requests.get(url)
+    headers = {'User-agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36'}
+    res = requests.get(url, headers = headers)
     res.raise_for_status()
     soup = BeautifulSoup(res.text, "lxml")
     result2=""
@@ -108,9 +110,10 @@ def champ_tier(msg):
     return result2
         
 
-
+#현재 오류뜸
 def user_info(url):
-    res = requests.get(url)
+    headers = {'User-agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36'}
+    res = requests.get(url, headers = headers)
     
     soup = BeautifulSoup(res.text, "lxml")
     #print("랭크 뜀")
@@ -183,18 +186,19 @@ def user_info(url):
         #########
 
         result = result + user_sen + rank_sen + rate_sen + most_champs
+        return result
 
 
     except:   #랭크 경험이 없는 경우
-           solo_rank_existence = soup.find("div", attrs={"class":"TierRank unranked"}).get_text().strip()
-           #print(solo_rank_existence)
-           if solo_rank_existence == "Unranked":
-               #print("애송이")
-               result = ""
-               result = "랭크나 뛰고 와라...애송아....에욱"
-    return result
+        solo_rank_existence = soup.find("div", attrs={"class":"TierRank unranked"}).get_text().strip()
+        #print(solo_rank_existence)
+        if solo_rank_existence == "Unranked":
+            #print("애송이")
+            result = ""
+            result = "랭크나 뛰고 와라...애송아....에욱"
+        return result
 
-#칼바람 챔프티어 확인
+
 def wind_champ_tier(wind_champ):
     try:
         result = ""
@@ -205,8 +209,10 @@ def wind_champ_tier(wind_champ):
                     eng_champ = line.split(':')
                     eng_champ = eng_champ[0]
                     eng_champ = eng_champ[2:-1]
+                    #print(eng_champ)
         url="https://www.op.gg/aram/{}/statistics/450/build".format(eng_champ)
-        res = requests.get(url)
+        headers = {'User-agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36'}
+        res = requests.get(url, headers = headers)
         res.raise_for_status()
         soup = BeautifulSoup(res.text, "lxml")
         champ_tier = soup.find("div", attrs={"class" : "champion-stats-header-info__tier"}).find("b").get_text().strip()
