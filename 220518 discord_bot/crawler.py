@@ -178,11 +178,13 @@ def search_champ(cmd):
     '''
     with open("test.html", "w", encoding="utf8") as f:
         f.write(res.text)
-
+    '''
+        
+    '''
     with open("test2.html", "w", encoding="utf8") as f:
         f.write(res2.text)
     '''
-
+    
     #챔피언에 충분한 데이터가 있을 때
     if is_data(soup):
         champ_tier = soup.find("span", attrs={"class":"tier_color"}).get_text()
@@ -267,7 +269,15 @@ def search_rune(soup):
     else:
         main_rune_list = [['X']*3 for _ in range(4)]
 
-    sub_rune_list = [['X']*3 for _ in range(3)]
+
+    sub_rune_list = []
+    
+    if champ_runes_name[1] == "지배":
+        for _ in range(2):
+            sub_rune_list.append(['X']*3)
+        sub_rune_list.append(['X']*4)
+    else:
+        sub_rune_list = [['X']*3 for _ in range(3)]
 
     ability_rune_list = [['X']*3 for _ in range(3)]
 
