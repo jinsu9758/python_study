@@ -1,0 +1,8 @@
+divide and conquer
+
+병합 정렬
+https://seungjuitmemo.tistory.com/21
+
+퀵 정렬
+https://www.daleseo.com/sort-quick/
+
